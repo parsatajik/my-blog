@@ -1,0 +1,30 @@
+---
+title: "How I'm Planning to Never Burnout Again"
+publishDate: "24 Sept 2023"
+description: "Lessons that I learned from dealing with a rough patch."
+tags: ["burnout", "agency"]
+---
+
+I wanted to write about burnout and some of the realities that are often not talked about on "success-focused" platforms like LinkedIn.
+
+It sounds funny to say but I am officially classified as a "workaholic" (at least that's what my therapist tells me). I regularly put in 10+ hour days and I can't lie to you, I enjoy the process. However, working hard is only possible if you are recovering hard – and I haven't been.
+
+Over the past few years, I've encountered a repetitive pattern in my life. I keep pushing and pushing for periods of 3 to 4 months and then I hit an absolutely nasty burnout period where I have to drastically reduce my output.
+
+I recently recovered from one of these periods where my health completely went down the drain (seems like I got Covid). and I wanted to share some of the lessons that I learned:
+
+1. The definition of learning is: same circumstance = different behaviour. If you consider yourself to be "smart" (like I do), it doesn't really make sense to keep having the same problem over and over again. Take some time, analyze and break the issue into smaller components (kind of like solving an engineering problem), and finally tackle them. I recommend looking into this video by Dr Justin Sung: https://www.youtube.com/watch?v=bq1x659j8mA
+
+2. Recovering hard means prioritizing your diet, sleep, and exercise. As you can guess, none of the above were that great on my end. If your plan is to grow your business or build a valuable tech company, you should understand (talking to myself here as well lol) that you are going to have to be grinding for the next 5 to 10 years of your life. Not only is this very hard, but without proper recovery, it's next to impossible.
+
+3. Don't spread yourself too thin. It's not realistic to build multiple successful businesses at the same time (even if you have a substantial amount of money). Focus on a specific niche and then expand (horizontally or vertically depending on your preferences). Kill/give away the side hustle to your side hustle – you will thank me later :D
+
+4. Create more content and give back to the community. Not related to recovery or burnout but I've realized that it's much easier to market an individual vs. a company. Give without expecting anything in return and you will be rewarded.
+
+Hope this helps! Remember, if you are feeling burnt out, you are not alone. Feel free to reach out to me if you need help with anything.
+
+Godspeed,
+
+Parsa
+
+P.S. I wanted to give a special thanks to Michael McCarthy for his guidance and advice throughout this period.
