@@ -2,7 +2,8 @@
 import { Image } from "astro:assets";
 
 import PageLayout from "@/layouts/Base";
-import aboutImg from "@/assets/about-astro.png";
+import computerClub from "@/assets/computer-club.jpeg";
+import babe from "@/assets/babe.webp";
 
 const meta = {
 	title: "About",
@@ -12,37 +13,98 @@ const meta = {
 
 <PageLayout meta={meta}>
 	<div class="space-y-6">
-		<h1 class="title">About</h1>
+		<h1 class="title">About Me</h1>
 		<p>
-			Hi, I’m a starter Astro. I’m particularly great for getting you started with your own blogging
-			website.
+			Hello! My name is Parsa Tajik. Growing up, I never quite fit into a specific group. I was
+			definitely nerdy and good with numbers but I also enjoyed interacting with and learning more
+			about people.
+		</p>
+		<p>
+			I got introduced to programming sometime around the age of 12. My school back home, <a
+				href="https://en.wikipedia.org/wiki/Allameh_Helli_High_Schools"
+				target="_blank"
+				rel="noopener noreferrer"
+				class="cactus-link inline-block">Allame Helli 1</a
+			>, had a programming curriculum that started with QBasic and gradually moved up to C++.
+		</p>
+		<p>
+			I immigrated to Canada with my family in 2015. The first few years were definitely
+			challenging. Getting used to a new country, a new language, and a completely new atmosphere in
+			your teen years is not something that I’d necessarily recommend to everyone but it can really
+			build your character.
+		</p>
+		<p>
+			In high school, I was obsessed with programming competitions and becoming a gold medalist in
+			IOI, the International Olympiad in Informatics. When I came to Canada, I had to study
+			algorithms and data structures on my own (solved over 800 problems just from <a
+				href="https://codeforces.com/profile/ParsaT"
+				target="_blank"
+				rel="noopener noreferrer"
+				class="cactus-link inline-block">this website</a
+			>) to participate in the Canadian Computing Competition and qualify for the country's
+			international team. In 2016 and <a
+				href="https://www.cemc.uwaterloo.ca/contests/past_contests/2017/2017CCCResults.pdf"
+				target="_blank"
+				rel="noopener noreferrer"
+				class="cactus-link inline-block">2017</a
+			>, I was one of the top 100 students in Canada but unfortunately, I didn’t make the cutoff as
+			they only selected the top 20 participants in the country.
+		</p>
+		<p>
+			Although it was hard, this experience was pivotal for my personal development. I made a lot of
+			new friends who were also interested in weird computer stuff and we had our little group.
+			Below is an old image of The Computer Club that I founded in my local high school (you can
+			also see the teenage Parsa):
 		</p>
 		<div class="flex justify-center">
 			<Image
-				src={aboutImg}
-				alt="A cartoon cactus looking at the 'Astro.build' logo"
+				src={computerClub}
+				alt="Parsa Tajik and the other members of the Computer Club at his high school"
 				loading="eager"
 				fetchpriority="high"
 			/>
 		</div>
-		<p>Here are my some of my awesome built in features:</p>
-		<ul class="list-inside list-disc">
-			<li>I'm ultra fast as I'm a static site</li>
-			<li>I'm fully responsive</li>
-			<li>I come with a light and dark mode</li>
-			<li>I'm easy to customise and add additional content</li>
-			<li>I have Tailwind CSS styling</li>
-			<li>Shiki code syntax highlighting</li>
-			<li>Satori for auto generating OG images for blog posts</li>
-		</ul>
 		<p>
-			Clone or fork my <a
-				class="cactus-link inline-block"
-				href="https://github.com/chrismwilliams/astro-cactus"
+			Fast forwarding a few years, I went to the <a
+				href="https://www.cemc.uwaterloo.ca/contests/past_contests/2017/2017CCCResults.pdf"
 				target="_blank"
 				rel="noopener noreferrer"
-				aria-label="github repository">repo</a
-			> if you like me!
+				class="cactus-link inline-block"
+				aria-label="University of Toronto computer science curriculum">University of Toronto</a
+			> and studied computer science! Since 2020, I have worked at a variety of companies (details
+			on my <a
+				href="https://www.cemc.uwaterloo.ca/contests/past_contests/2017/2017CCCResults.pdf"
+				target="_blank"
+				rel="noopener noreferrer"
+				class="cactus-link inline-block"
+				aria-label="Parsa Tajik's LinkedIn">LinkedIn</a
+			>) and by the time you’re reading this, I’m probably a software engineer at Affirm. On the
+			side, I have been running Bloorsoft, my boutique development agency that helps founders with
+			building their tech and raising funding.
 		</p>
+		<p>
+			On this website, I’ll be sharing my journey of building products in public, helping founders
+			with their startups, and other things that I find interesting (this blog was heavily inspired
+			by <a
+				href="http://www.paulgraham.com/"
+				target="_blank"
+				rel="noopener noreferrer"
+				class="cactus-link inline-block"
+				aria-label="Paul Graham's website">Paul Graham</a
+			> and his amazing essays). I hope that you enjoy my posts and get some value from the things
+			that I share. Feel free to shoot me a message if you want to chat!
+		</p>
+		<p>Godspeed,</p>
+		<p>Parsa</p>
+		<p>Sept, 2023</p>
+		<p>P.S. Since you made it this far, here’s a bonus pic of my little doggo, Babe.</p>
+		<div class="flex justify-center">
+			<Image
+				src={babe}
+				alt="Parsa Tajik's dog, Babe"
+				loading="eager"
+				fetchpriority="high"
+			/>
+		</div>
 	</div>
 </PageLayout>

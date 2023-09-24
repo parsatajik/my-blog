@@ -8,46 +8,16 @@ const MAX_POSTS = 10;
 const allPosts = await getAllPosts();
 const allPostsByDate = sortMDByDate(allPosts).slice(0, MAX_POSTS);
 
-const cactusTech: Array<{ title: string; desc: string; href: string }> = [
+const projects: Array<{ title: string; desc: string; href: string }> = [
 	{
-		title: "Astro",
-		desc: "Build fast websites, faster.",
-		href: "https://astro.build",
+		title: "Bloorsoft",
+		desc: "My boutique software development agency, based in Toronto.",
+		href: "https://bloorsoft.com",
 	},
 	{
-		title: "Astro Assets",
-		desc: "Built-in optimized asset support.",
-		href: "https://docs.astro.build/en/guides/assets/",
-	},
-	{
-		title: "Tailwind CSS",
-		desc: "Rapidly build modern websites without ever leaving your HTML.",
-		href: "https://tailwindcss.com",
-	},
-	{
-		title: "Markdown",
-		desc: "Simple and easy-to-use markup language.",
-		href: "https://www.markdownguide.org/",
-	},
-	{
-		title: "MDX",
-		desc: "Markdown for the component era.",
-		href: "https://mdxjs.com/",
-	},
-	{
-		title: "Satori",
-		desc: "Generating png Open Graph images for blog posts.",
-		href: "https://github.com/vercel/satori",
-	},
-	{
-		title: "Pagefind",
-		desc: "A fully static search library.",
-		href: "https://pagefind.app/",
-	},
-	{
-		title: "Astro Icon",
-		desc: "An easy to use Icon component for Astro.",
-		href: "https://github.com/natemoo-re/astro-icon#readme",
+		title: "Artefice",
+		desc: "Where AI meets fashion.",
+		href: "https://www.artefice.ai/",
 	},
 ];
 ---
@@ -56,9 +26,18 @@ const cactusTech: Array<{ title: string; desc: string; href: string }> = [
 	<section>
 		<h1 class="title mb-6">Hello World!</h1>
 		<p class="mb-4">
-			Hi, I’m a theme for Astro, an example of how you can use this starter to create a personal
-			blog. If you want to know more about how you can customise me, add more posts, and make it
-			your own, click on one the github icon link below which will take you to my repo.
+			Welcome to my blog. I created this website to share my journey of building products in public
+			and helping founders with their startups. I’m a software engineer based in Toronto (soon to be
+			New York) who found himself to be very interested in manufacturing growth and understanding
+			sales & marketing. I’m now actively building a variety of applications and running my boutique
+			software development agency, <a
+				href="https://bloorsoft.com"
+				target="_blank"
+				rel="noopener noreferrer"
+				class="cactus-link inline-block"
+				aria-label="Bloorsoft's website">Bloorsoft</a
+			>. I hope that you enjoy my posts and get some value from the things that I share. Feel free
+			to shoot me a message if you want to chat!
 		</p>
 		<SocialList />
 	</section>
@@ -75,10 +54,10 @@ const cactusTech: Array<{ title: string; desc: string; href: string }> = [
 		</ul>
 	</section>
 	<section class="mt-16">
-		<h2 class="title mb-4 text-xl">Technologies</h2>
+		<h2 class="title mb-4 text-xl">Projects</h2>
 		<ul class="space-y-4 sm:space-y-2">
 			{
-				cactusTech.map(({ href, title, desc }) => (
+				projects.map(({ href, title, desc }) => (
 					<li>
 						<a
 							href={href}
@@ -87,8 +66,7 @@ const cactusTech: Array<{ title: string; desc: string; href: string }> = [
 							class="cactus-link inline-block"
 						>
 							{title}
-						</a>: 
-						<p class="inline-block sm:mt-2">{desc}</p>
+						</a>: <p class="inline-block sm:mt-2">{desc}</p>
 					</li>
 				))
 			}
