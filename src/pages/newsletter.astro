@@ -1,0 +1,32 @@
+---
+import PageLayout from "@/layouts/Base";
+
+const meta = {
+	title: "Newsletter | Stack & Stakes by Parsa Tajik",
+	descriptiom:
+		"Subscribe to Stack & Stakes, a weekly newsletter by Parsa Tajik. Get insights on building products, growing businesses, and the journey of a software engineer and founder.",
+};
+---
+
+<PageLayout meta={meta}>
+	<div class="space-y-6">
+		<h1 class="title">Newsletter</h1>
+		<p>
+			Hey hey! Thanks for taking the time and getting to this page, I genuinely appreciate you 🤍
+		</p>
+		<p>
+			I’ll be sending out a weekly newsletter about interesting things that I find or I’m doing for
+			building products and growing businesses. I hope that this content can help you in your
+			journey.
+		</p>
+		<iframe
+			src="https://embeds.beehiiv.com/361a3266-b790-4f7a-9c74-d24c0f27d5a2"
+			class="mt-6"
+			data-test-id="beehiiv-embed"
+			width="100%"
+			height="320"
+			style="border-radius: 4px; border: 2px solid #e5e7eb; background-color: transparent;"
+		></iframe>
+	</div>
+	<script type="text/javascript" async src="https://embeds.beehiiv.com/attribution.js"></script>
+</PageLayout>
