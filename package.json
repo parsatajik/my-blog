@@ -8,7 +8,8 @@
 		"build": "astro build",
 		"postbuild": "pagefind --source dist",
 		"preview": "astro preview",
-		"format": "prettier -w --cache ."
+		"format": "prettier -w --cache .",
+		"prepare": "simple-git-hooks"
 	},
 	"devDependencies": {
 		"@pagefind/default-ui": "^0.12.0",
@@ -27,6 +28,7 @@
 		"eslint-plugin-import": "^2.28.1",
 		"eslint-plugin-jsx-a11y": "^6.7.1",
 		"eslint-plugin-prettier": "^5.0.0",
+		"lint-staged": "^15.2.11",
 		"mdast-util-to-string": "^4.0.0",
 		"pagefind": "^0.12.0",
 		"postcss": "^8.4.29",
@@ -37,6 +39,7 @@
 		"prettier-plugin-tailwindcss": "^0.5.4",
 		"reading-time": "^1.5.0",
 		"remark-unwrap-images": "^3.0.1",
+		"simple-git-hooks": "^2.11.1",
 		"tailwindcss": "^3.3.3",
 		"typescript": "^5.2.2"
 	},
@@ -53,5 +56,13 @@
 		"satori-html": "^0.3.2",
 		"sharp": "^0.32.5"
 	},
-	"packageManager": "pnpm@8.6.1"
+	"packageManager": "pnpm@8.6.1",
+	"simple-git-hooks": {
+		"pre-commit": "npx lint-staged"
+	},
+	"lint-staged": {
+		"*.{js,jsx,ts,tsx,md,mdx,json,astro}": [
+			"prettier --write"
+		]
+	}
 }
