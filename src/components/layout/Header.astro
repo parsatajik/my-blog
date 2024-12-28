@@ -2,8 +2,6 @@
 import ThemeToggle from "../ThemeToggle.astro";
 import Search from "../Search.astro";
 import { menuLinks } from "@/site-config";
-import { Image } from "astro:assets";
-import LOGO from "@/assets/logo.svg";
 
 const url = new URL(Astro.request.url);
 ---
@@ -33,7 +31,7 @@ const url = new URL(Astro.request.url);
 
 <header
 	id="main-header"
-	class="group relative mb-28 flex items-center sm:ps-[4.5rem]"
+	class="group relative mb-28 flex items-center"
 	transition:persist
 >
 	<div class="flex sm:flex-col">
@@ -42,13 +40,7 @@ const url = new URL(Astro.request.url);
 			class="inline-flex items-center grayscale hover:filter-none sm:relative sm:inline-block"
 			aria-current={url.pathname === "/" ? "page" : false}
 		>
-			<Image
-				alt="The technologist emoji used as the logo for Parsa Tajik's blog"
-				src={LOGO}
-				class="me-3 h-10 w-10 sm:absolute sm:start-[-5rem] sm:me-0 sm:h-14 sm:w-14"
-				loading="eager"
-			/>
-			<span class="text-xl font-bold sm:text-2xl">Parsa Tajik</span>
+			<h1 class="text-xl font-bold sm:text-2xl">Parsa Tajik</h1>
 		</a>
 		<nav
 			id="navigation-menu"
