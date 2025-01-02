@@ -1,0 +1,21 @@
+---
+title: "How to add a git repo inside another repository"
+publishDate: "1 Jan 2025"
+description: "How to add a git repo inside another"
+tags: ["git", "submodules"]
+---
+
+just cloning the repo inside the parent is not going to be enough. we need to use git submodules.
+
+follow these instructions:
+
+- cd into the parent repo
+- run git submodule add https://github.com/yourusername/the_repo_name
+- commit and push your changes
+
+if you've already cloned the repo by mistake and have committed it to the parent, use the following instead:
+
+- run git rm -r --cached the_repo_name
+- git commit -m "removed the child repo"
+- run git submodule add https://github.com/yourusername/the_repo_name
+- commit and push your changes
