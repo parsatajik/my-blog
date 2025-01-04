@@ -1,0 +1,295 @@
+---
+title: "How to add Supabase Auth to your React Vite app"
+publishDate: "2 Jan 2025"
+description: "How to add Supabase Auth to your React Vite web application"
+tags: ["supabase", "auth", "react", "vite"]
+---
+
+It's been ~1 year since I switched to using Next.js instead of my usual React + Vite setup.
+
+My partner has been transitioning to tech from medicine and I've been helping her with becoming a better software engineer.
+
+She's currently working on her first web app! I thoroughly believe in the power of learning through doing and that's why we immediately jumped into building a project after she finished her html/css/js course.
+
+As you might have guessed it, we're using the following stack:
+
+- React + JavaScript
+- Vite as our bundler
+- npm as the package manager
+- Supabase as our database and auth provider
+- TailwindCSS for styling
+- Shadcn/UI for components
+- React Router for routing
+- Vercel for deployment
+
+So, without further ado, let's get into how I added Supabase Auth to her app.
+
+## Setting up Supabase
+
+We had already done this step but make sure that you have a Supabase account and that you have created a project. Add your supabase credentials to the `.env` file.
+
+## Setting up Supabase Auth
+
+I started by following this guide: [How to add Supabase Auth to your React Vite app](https://supabase.com/docs/guides/auth/quickstarts/react).
+
+Since we're using React Router for routing, I had to make a few changes to the code. The entry point of our app is `src/main.jsx`:
+
+```jsx
+import { StrictMode } from "react";
+import { createRoot } from "react-dom/client";
+import { BrowserRouter, Routes, Route } from "react-router";
+import "./index.css";
+
+import App from "./App.jsx";
+import Layout from "./components/Layout";
+
+createRoot(document.getElementById("root")).render(
+	<StrictMode>
+		<BrowserRouter>
+			<Routes>
+				<Route element={<Layout />}>
+					<Route index element={<App />} />
+				</Route>
+			</Routes>
+		</BrowserRouter>
+	</StrictMode>,
+);
+```
+
+Similar to Next.js, the Layout component is used to wrap the entire app:
+
+```jsx
+import { Outlet } from "react-router";
+import Header from "./Header";
+import { useState, useEffect } from "react";
+import { createClient } from "@supabase/supabase-js";
+import { Auth } from "@supabase/auth-ui-react";
+import { ThemeSupa } from "@supabase/auth-ui-shared";
+
+const supabase = createClient(
+	import.meta.env.VITE_SUPABASE_URL,
+	import.meta.env.VITE_SUPABASE_ANON_KEY,
+);
+
+const Layout = () => {
+	const [session, setSession] = useState(null);
+
+	useEffect(() => {
+		supabase.auth.getSession().then(({ data: { session } }) => {
+			setSession(session);
+		});
+
+		const {
+			data: { subscription },
+		} = supabase.auth.onAuthStateChange((_event, session) => {
+			setSession(session);
+		});
+
+		return () => subscription.unsubscribe();
+	}, []);
+
+	if (!session) {
+		return (
+			<div className="mx-auto mt-[50vh] w-full max-w-2xl -translate-y-1/2">
+				<Auth supabaseClient={supabase} appearance={{ theme: ThemeSupa }} />
+			</div>
+		);
+	} else {
+		return (
+			<div>
+				<Header />
+				<main className="p-4">
+					<Outlet />
+				</main>
+			</div>
+		);
+	}
+};
+
+export default Layout;
+```
+
+Well, this is pretty much it for the basic setup. However, we're note done yet.
+
+## Adding users to the database from the `auth.users` table
+
+As you saw on the supabase doc that was linked above, when a user signs up, they are added to the `auth.users` table.
+
+However, in most applications we want to store additional information about the user that is revelant to our app's logic (think profile pictures, subscription status, etc).
+
+To do this, we need to use a supabase function that gets triggered when a user signs up. Follow the steps outlined below:
+
+- Make sure that you have a `users` table in your database.
+
+- Go to the supabase sql editor and run the following code:
+
+```sql
+-- Create function to handle new user signup
+create or replace function public.handle_new_user()
+returns trigger as $$
+begin
+  insert into public.users (id, email)
+  values (new.id, new.email);
+  return new;
+end;
+$$ language plpgsql security definer;
+
+-- Create trigger that runs the function after an insert on auth.users
+create trigger on_auth_user_created
+  after insert on auth.users
+  for each row execute procedure public.handle_new_user();
+```
+
+This will create a function that inserts the user's email into the `users` table and then create a trigger that runs the function after a new user is created.
+
+IMPORTANT: Make sure that the id column in the `users` table is a `uuid` type. Supabase uses `int8` by default -- this will cause an error.
+
+- Now, test your changes by signing up through the auth UI.
+
+## How to make things better
+
+If you've come this far your app should already be working. However, there are a few things that we can do to make things cleaner and more reusable.
+
+At the moment, any component that requires access to user data needs to fetch that information from our DB. Let's fix this using React Context:
+
+- Create a new file `src/contexts/UserContext.jsx` and add the following code:
+
+```jsx
+import { createContext, useContext, useState, useEffect } from "react";
+import { getDB } from "../lib/utils";
+
+const UserContext = createContext({});
+
+// eslint-disable-next-line react/prop-types
+export function UserProvider({ children }) {
+	const [user, setUser] = useState(null);
+	const [session, setSession] = useState(null);
+	const [loading, setLoading] = useState(true);
+	const supabase = getDB();
+
+	useEffect(() => {
+		supabase.auth.getSession().then(({ data: { session } }) => {
+			setSession(session);
+			if (session?.user) {
+				fetchUser(session.user.id);
+			}
+		});
+
+		const {
+			data: { subscription },
+		} = supabase.auth.onAuthStateChange((_event, session) => {
+			setSession(session);
+			if (session?.user) {
+				fetchUser(session.user.id);
+			} else {
+				setUser(null);
+			}
+		});
+
+		return () => subscription.unsubscribe();
+	}, []);
+
+	const fetchUser = async (userId) => {
+		try {
+			const { data, error } = await supabase.from("users").select("*").eq("id", userId).single();
+
+			if (error) throw error;
+			setUser(data);
+		} catch (error) {
+			console.error("Error fetching user:", error);
+		} finally {
+			setLoading(false);
+		}
+	};
+
+	return <UserContext.Provider value={{ user, session, loading }}>{children}</UserContext.Provider>;
+}
+
+export const useUser = () => {
+	const context = useContext(UserContext);
+	if (context === undefined) {
+		throw new Error("useUser must be used within a UserProvider");
+	}
+	return context;
+};
+```
+
+- Now, wrap your `main.jsx` file in the `UserProvider` component:
+
+```jsx
+createRoot(document.getElementById("root")).render(
+	<StrictMode>
+		<UserProvider>
+			<BrowserRouter>
+				<Routes>
+					<Route element={<Layout />}>
+						<Route index element={<App />} />
+						<Route path="/spot/:id" element={<SpotPage />} />
+					</Route>
+				</Routes>
+			</BrowserRouter>
+		</UserProvider>
+	</StrictMode>,
+);
+```
+
+- Update the `Layout` component to use the `useUser` hook:
+
+```jsx
+import { Outlet } from "react-router";
+import Header from "./Header";
+import { Auth } from "@supabase/auth-ui-react";
+import { ThemeSupa } from "@supabase/auth-ui-shared";
+import { useUser } from "../contexts/UserContext";
+import { getDB } from "../lib/utils";
+
+const Layout = () => {
+	const { session } = useUser();
+
+	if (!session) {
+		return (
+			<div className="mx-auto mt-[50vh] w-full max-w-2xl -translate-y-1/2">
+				<Auth supabaseClient={getDB()} appearance={{ theme: ThemeSupa }} />
+			</div>
+		);
+	}
+
+	return (
+		<div>
+			<Header />
+			<main className="p-4">
+				<Outlet />
+			</main>
+		</div>
+	);
+};
+
+export default Layout;
+```
+
+- Now, any component that needs to access user data can use the `useUser` hook to get the user data:
+
+```jsx
+const UserInfo = () => {
+	const { user } = useUser();
+	return <div>{user.email}</div>;
+};
+```
+
+Another nit that you might have noticed was that I'm importing the `getDB` function from `../lib/utils`:
+
+```jsx
+import { createClient } from "@supabase/supabase-js";
+
+export function getDB() {
+	return createClient(import.meta.env.VITE_SUPABASE_URL, import.meta.env.VITE_SUPABASE_ANON_KEY);
+}
+```
+
+I just wanted things to be cleaner and more modular in case I needed to change the supabase client in the future.
+
+## Conclusion
+
+That's pretty much it! I hope this helps you get started with Supabase Auth in your React Vite app.
+
+Keep on coding!
